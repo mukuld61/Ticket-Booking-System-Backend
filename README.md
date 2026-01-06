@@ -1,6 +1,6 @@
-# 🎫 Ticket Booking System – Backend
+# Ticket Booking System – Backend
 
-## 📌 Project Overview
+##  Project Overview
 
 The **Ticket Booking System Backend** is a full-stack–ready, role-based RESTful API designed to manage **multi-mode ticket bookings** including **Flight, Bus, and Rail** services. The system handles the complete booking lifecycle such as passenger management, booking updates, cancellations, refunds, invoice generation, and ledger tracking.
 
@@ -8,7 +8,7 @@ This backend is built using **Node.js**, **Express**, **Sequelize ORM**, and **M
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
 - Role-based access control (Admin, Agent, Client)
 - Multi-type bookings (Flight / Bus / Rail)
@@ -23,7 +23,7 @@ This backend is built using **Node.js**, **Express**, **Sequelize ORM**, and **M
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Node.js** – Server-side runtime
 - **Express.js** – Web application framework
@@ -34,7 +34,7 @@ This backend is built using **Node.js**, **Express**, **Sequelize ORM**, and **M
 
 ---
 
-## 🧩 Backend Architecture
+##  Backend Architecture
 
 The backend follows a **layered architecture** to ensure scalability and maintainability:
 
@@ -48,12 +48,12 @@ The backend follows a **layered architecture** to ensure scalability and maintai
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 
 ---
 
-## 🔐 Authentication & Authorization
+##  Authentication & Authorization
 
 - JWT-based authentication
 - Role-based authorization (Admin, Agent, Client)
@@ -62,7 +62,7 @@ The backend follows a **layered architecture** to ensure scalability and maintai
 
 ---
 
-## 💳 Booking & Financial Logic
+##  Booking & Financial Logic
 
 The system implements real-world financial workflows, including:
 - Fare and service charge calculation
