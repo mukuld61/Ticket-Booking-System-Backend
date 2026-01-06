@@ -16,6 +16,7 @@ const createRailwayBooking = async (req, res) => {
       destination,
       travelDate,
       passengerDetails,
+      boardingPoint,
       amount,
       createdBy,
     } = req.body;
@@ -41,7 +42,7 @@ const createRailwayBooking = async (req, res) => {
       toStation: destination,
       departureDate: travelDate,
       totalPassengers,
-     
+     boardingPoint,
       status:bookingStatus,
       ticketStatus,
       createdBy,
@@ -56,6 +57,7 @@ const createRailwayBooking = async (req, res) => {
         name: p.name,
         age: p.age,
         gender: p.gender,
+        honorifics: p.honorifics
       }));
       await Passenger.bulkCreate(passengers);
     }
@@ -64,7 +66,7 @@ const createRailwayBooking = async (req, res) => {
     const bookingWithDetails = await BookingRail.findByPk(booking.id, {
       include: [
         { model: Client, as: "client", attributes: ["id", "name", "phone", "email"] },
-        { model: Passenger, as: "railpassengers", attributes: ["id", "name", "age", "gender"] }
+        { model: Passenger, as: "railpassengers", attributes: ["id", "name", "age", "gender", "honorifics"] }
       ]
     });
 
@@ -81,7 +83,7 @@ const getAllRailwayBookings = async (req, res) => {
     const bookings = await BookingRail.findAll({
       include: [
         { model: Client, as: "client", attributes: ["id", "name", "phone", "email"] },
-        { model: Passenger, as: "railPassengers", attributes: ["id", "name", "age", "gender"] }
+        { model: Passenger, as: "railPassengers", attributes: ["id", "name", "age", "gender", "honorifics"] }
       ],
       order: [["createdAt", "DESC"]]
     });
@@ -96,7 +98,7 @@ const getRailwayBookingById = async (req, res) => {
     const booking = await BookingRail.findByPk(req.params.id, {
       include: [
         { model: Client, as: "client", attributes: ["id", "name", "phone", "email"] },
-        { model: Passenger, as: "railPassengers", attributes: ["id", "name", "age", "gender"] }
+        { model: Passenger, as: "railPassengers", attributes: ["id", "name", "age", "gender", "honorifics"] }
       ]
     });
     if (!booking) return res.status(404).json({ message: "Booking not found" });

@@ -9,7 +9,9 @@ router.post("/booking", authenticate, createBooking);
 
 router.post("/booking/agent/:agentId", authenticate, createBooking);
 
-router.get("/confirmed", getConfirmedBookings);
+router.get("/confirmed", authenticate, getConfirmedBookings);
+
+// router.get("/confirmed/:agentId", getConfirmedBookings);
 
 router.get("/confirmed/:type/:bookingId", getConfirmedBookingById); 
 

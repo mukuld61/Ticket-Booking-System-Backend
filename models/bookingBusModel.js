@@ -5,6 +5,8 @@ const Client = require("./clientModel");
 const Passenger = require("./passengerModel");
 const User = require("./userModel");
 const Company = require("./companyModel");
+// const TripDetails = require("./tripDetailsModel");
+
 const BookingBus = sequelize.define("BookingBus", {
   id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
   clientId: { type: DataTypes.INTEGER, allowNull: false },
@@ -41,6 +43,11 @@ bookedBy: {
   type: DataTypes.STRING,
   allowNull: true,
 },
+boardingPoint: {
+  type: DataTypes.STRING,
+  allowNull: true,
+},
+
 seatNumber: {
   type: DataTypes.STRING,
   allowNull: true,
@@ -61,6 +68,18 @@ totalAmount: {
       type: DataTypes.ENUM("Pending", "Confirmed", "Cancelled","Waiting"),
       defaultValue: "Pending",
     },
+      
+
+  tripType: {
+    type: DataTypes.ENUM('single', 'round', 'multi'),
+    defaultValue: 'single'
+  },
+// tripGroupId: {
+//   type: DataTypes.STRING,
+//   allowNull: true
+// }
+
+
 },{
   tableName: "BookingBuses",
   timestamps: true,
@@ -77,4 +96,19 @@ Passenger.belongsTo(BookingBus, { foreignKey: "bookingId", as: "busBooking" });
 
 BookingBus.belongsTo(User, { foreignKey: "bookedBy", as: "bookedByUser" });
 BookingBus.belongsTo(Company, { foreignKey: "companyId", as: "company" });
+
+
+// BookingBus.hasMany(TripDetails, {
+//   foreignKey: 'bookingId',
+//   constraints: false,
+//   scope: { bookingType: 'bus' },
+//   as: 'tripDetails'
+// });
+
+// TripDetails.belongsTo(BookingBus, {
+//   foreignKey: 'bookingId',
+//   constraints: false,
+//   as: 'busBooking'
+// });
+
 module.exports = BookingBus;  

@@ -62,7 +62,10 @@ const CancelledBooking = sequelize.define("CancelledBooking", {
   },
 
 
-
+billNo: {
+    type: DataTypes.STRING(64),
+    allowNull: false
+  },
   cancellationCharge: {
     type: DataTypes.FLOAT,
     defaultValue: 0
@@ -79,25 +82,25 @@ const CancelledBooking = sequelize.define("CancelledBooking", {
     defaultValue: 0
   },
 
-  totalDeduction: {
-    type: DataTypes.FLOAT, 
-    defaultValue: 0
-  },
+  // totalDeduction: {
+  //   type: DataTypes.FLOAT, 
+  //   defaultValue: 0
+  // },
 
-  refundableAmount: {
-    type: DataTypes.FLOAT, 
-    defaultValue: 0
-  },
+  // refundableAmount: {
+  //   type: DataTypes.FLOAT, 
+  //   defaultValue: 0
+  // },
 
   paidAmount: {
     type: DataTypes.FLOAT,
     defaultValue: 0
   },
 
-  refundAmount: {
-    type: DataTypes.FLOAT, 
-    defaultValue: 0
-  },
+  // refundAmount: {
+  //   type: DataTypes.FLOAT, 
+  //   defaultValue: 0
+  // },
 
   remainingAmount: {
     type: DataTypes.FLOAT, 
@@ -124,8 +127,12 @@ const CancelledBooking = sequelize.define("CancelledBooking", {
     allowNull: true
   }
 },
-
+  {
+    timestamps: true,
+  }
 );
+
+
 
 module.exports = CancelledBooking;
 

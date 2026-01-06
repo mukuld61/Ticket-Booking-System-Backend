@@ -30,9 +30,9 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
-     phone: {
-      type: DataTypes.STRING(15), 
-      allowNull: true, 
+    phone: {
+      type: DataTypes.STRING(15),
+      allowNull: true,
       validate: {
         is: /^[0-9+\-() ]{7,15}$/i,
       },
@@ -47,14 +47,28 @@ const User = sequelize.define(
       type: DataTypes.ENUM("admin", "agent"),
       defaultValue: "agent",
     },
+    resetOtp: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    resetOtpExpiry: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
   },
   { timestamps: true }
 );
 
 // Hash password before saving
 User.beforeCreate(async (user) => {
+  const plainPassword = user.password;
   const salt = await bcrypt.genSalt(10);
+  console.log('Hashed Password before Create:', plainPassword);
   user.password = await bcrypt.hash(user.password, salt);
+  console.log('Hashed Password after Create:', user.password);
+  const compare = await bcrypt.compare(plainPassword, user.password);
+  console.log('Password Match after Create:', compare);
+  
 });
 
 module.exports = User;

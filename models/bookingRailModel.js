@@ -118,6 +118,11 @@ const BookingRail = sequelize.define(
       allowNull: false,
       defaultValue: 1,
     },
+    boardingPoint: {
+  type: DataTypes.STRING,
+  allowNull: true,
+},
+
 
 totalAmount: {
   type: DataTypes.DECIMAL(10,2),
@@ -144,6 +149,11 @@ totalAmount: {
       type: DataTypes.ENUM("Pending", "Confirmed", "Cancelled","Waiting"),
       defaultValue: "Pending",
     },
+    
+  tripType: {
+    type: DataTypes.ENUM('single', 'round', 'multi'),
+    defaultValue: 'single'
+  },
   },
   {
     tableName: "BookingRails",

@@ -23,6 +23,10 @@ const Payment = sequelize.define("Payment", {
   receivingDate: { type: DataTypes.DATE, allowNull: false },
   note: { type: DataTypes.TEXT },
 
+  invoiceId: { type: DataTypes.INTEGER, allowNull: true },
+billNo: { type: DataTypes.STRING(64), allowNull: true },
+
+
   paymentType: { type: DataTypes.STRING, allowNull: false },
 
   bankName: { type: DataTypes.STRING },

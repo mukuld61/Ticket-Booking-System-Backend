@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const { sendMail } = require("../config/mailer");
 const crypto = require("crypto");
+const bcrypt = require("bcryptjs");
 
 
 const createAgent = async (req, res) => {
@@ -9,8 +10,14 @@ const createAgent = async (req, res) => {
 
     if (!name || !email)
       return res.status(400).json({ message: "Name and email are required" });
+        // const plainPassword = crypto.randomBytes(4).toString("hex");
+    const plainPassword = Math.random().toString(36).slice(-8);
+    console.log('plain password', plainPassword)
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(plainPassword, salt);
 
-    const plainPassword = crypto.randomBytes(4).toString("hex");
+    // const comapredPassword = await bcrypt.compare(plainPassword, hashedPassword);
+    // console.log('comapredPassword', comapredPassword, hashedPassword);
 
     const newAgent = await User.create({
       name,
@@ -20,7 +27,8 @@ const createAgent = async (req, res) => {
       location,
       role: "agent",
       Agentstatus: "active",
-    });
+    }); 
+    console.log('New Agent Created:', newAgent);  
 
     await sendMail(
       email,

@@ -1,9 +1,9 @@
-const { DataTypes } = require("sequelize");
+ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 const User = require("./userModel");
 const Client = require("./clientModel");
 const CancelledBooking = require("./cancelledBookingModel");
-
+const Invoice = require("./invoicesModel");
 const BookingUpdate = sequelize.define(
   "BookingUpdate",
   {
@@ -17,10 +17,34 @@ const BookingUpdate = sequelize.define(
     pnrNumber: { type: DataTypes.STRING, allowNull: true },
     ticketNumber: { type: DataTypes.STRING, allowNull: true },
     uploadTicket: { type: DataTypes.STRING, allowNull: true },
-    amount: { type: DataTypes.DECIMAL(10, 2), allowNull: true },
     ticketType: { type: DataTypes.STRING, allowNull: true },
-    serviceCharge: { type: DataTypes.DECIMAL(10, 2), allowNull: true },
-    totalAmount: { type: DataTypes.DECIMAL(10, 2), allowNull: true },
+    ticketAmount: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true,
+    },
+
+    bookingCharge: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true,
+    },
+
+    typeServiceCharge: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true,
+    },
+
+    otherCharge: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true,
+    },
+
+    totalAmount: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true,
+    },
+
+    billNo: { type: DataTypes.STRING(64), allowNull: true },
+
     journeyDate: {
       type: DataTypes.DATEONLY,
       allowNull: true,

@@ -2,7 +2,11 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 const Client = require("./clientModel");
 const User = require("./userModel");
-
+const FlightBooking = require("./bookingFlightModel");
+const BusBooking = require("./bookingBusModel");
+const RailBooking = require("./bookingRailModel");
+const Invoice = require("./invoicesModel");
+const BookingUpdate = require("./bookingUpdateModel");
 const Ledger = sequelize.define(
   "Ledger",
   {
@@ -16,6 +20,7 @@ const Ledger = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+
 
     agentId: {
       type: DataTypes.INTEGER,
@@ -53,6 +58,8 @@ const Ledger = sequelize.define(
       defaultValue: 0.0,
     },
 
+    billNo: { type: DataTypes.STRING(64), allowNull: true },
+
     paymentMode: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -75,10 +82,29 @@ const Ledger = sequelize.define(
 );
 
 
-Ledger.belongsTo(Client, { foreignKey: "clientId", as: "client" });
+// Ledger.belongsTo(Client, { foreignKey: "clientId", as: "client" });
 Client.hasMany(Ledger, { foreignKey: "clientId", as: "ledgerEntries" });
 
 Ledger.belongsTo(User, { foreignKey: "createdBy", as: "createdByUser" });
 User.hasMany(Ledger, { foreignKey: "createdBy", as: "userLedgerEntries" });
+
+Ledger.belongsTo(Client, { foreignKey: "clientId", as: "client" });
+
+Ledger.belongsTo(FlightBooking, { foreignKey: "bookingId", as: "flightBooking" });
+Ledger.belongsTo(BusBooking, { foreignKey: "bookingId", as: "busBooking" });
+Ledger.belongsTo(RailBooking, { foreignKey: "bookingId", as: "railBooking" });
+
+Ledger.belongsTo(Invoice, {
+  foreignKey: "billNo",
+  targetKey: "billNo",
+  as: "invoice"
+});
+
+Ledger.belongsTo(BookingUpdate, {
+  foreignKey: "bookingId",
+  targetKey: "bookingId",
+  constraints: false,
+  as: "bookingUpdate"
+});
 
 module.exports = Ledger;

@@ -1,6 +1,8 @@
 
 const Client = require("../models/clientModel");
-const { Op } = require("sequelize");
+const sequelize = require("../config/db");
+
+
 const createClient = async (req, res) => {
   try {
     const { name, email, phone, notes } = req.body;
@@ -76,8 +78,49 @@ const searchClients = async (req, res) => {
   }
 };
 
+const updateClientDetails = async (req, res) => {
+  const t = await sequelize.transaction();
+  try {
+    const { clientId } = req.params;
+    const { name, email, phone } = req.body;
+
+    const client = await Client.findByPk(clientId, { transaction: t });
+
+    if (!client) {
+      await t.rollback();
+      return res.status(404).json({
+        success: false,
+        message: "Client not found"
+      });
+    }
+
+    await client.update(
+      { name, email, phone },
+      { transaction: t }
+    );
+
+    await t.commit();
+
+    return res.status(200).json({
+      success: true,
+      message: "Client updated successfully",
+      client
+    });
+
+  } catch (error) {
+    await t.rollback();
+    console.error("updateClientDetails error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message
+    });
+  }
+};
+
 module.exports ={
   createClient,
   getClients ,
-  searchClients
+  searchClients,
+  updateClientDetails
 }

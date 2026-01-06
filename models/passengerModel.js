@@ -5,6 +5,11 @@ const Passenger = sequelize.define(
   "Passenger",
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+          clientId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    honorifics: { type: DataTypes.STRING, allowNull: false }, 
     bookingId: { type: DataTypes.INTEGER, allowNull: false },
     type: { type: DataTypes.ENUM("bus", "flight", "rail"), allowNull: false },
     name: { type: DataTypes.STRING, allowNull: false },
@@ -13,7 +18,7 @@ const Passenger = sequelize.define(
   },
   {
     tableName: "Passengers",
-    timestamps: true,
+    timestamps: true, 
   }
 );
 

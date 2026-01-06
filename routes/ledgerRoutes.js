@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { createLedgerEntry, getLedgerByClient } = require("../controllers/ledgerController");
+const { createLedgerEntry,getAllLedger, getLedgerByClient } = require("../controllers/ledgerController");
+const { authenticate } = require("../middleware/authMiddleware");
+
+router.post("/create", authenticate, createLedgerEntry);
 
 
-router.post("/create", createLedgerEntry);
-
-
-router.get("/:clientId", getLedgerByClient);
+router.get("/all", authenticate, getAllLedger);
 
 
 module.exports = router;

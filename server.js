@@ -4,6 +4,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const multer = require("multer");
 
+
 const sequelize = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
@@ -22,6 +23,10 @@ const ledgerRoutes = require("./routes/ledgerRoutes");
 const companyRoutes = require("./routes/companyRoutes");
 const invoiceRoutes = require("./routes/invoiceRoutes");
 const paymentsRouter = require("./routes/payments");
+const customerStatementRoutes = require("./routes/customerStatementRoutes");
+const cashBookRoutes = require("./routes/cashBookRoutes");
+const cashBookCron = require("./utils/cashBookCron");
+const passengerRoutes = require("./routes/passengerRoutes");
 
 dotenv.config();
 const app = express();
@@ -50,15 +55,16 @@ app.use("/api/ledger", ledgerRoutes);
 app.use("/api/company", companyRoutes);
 app.use("/api/invoices", invoiceRoutes);
 app.use("/api/payments", paymentsRouter);
+app.use("/api/customer-statement", customerStatementRoutes);
+app.use("/api/cashbook", cashBookRoutes);
+app.use("/api/passengers", passengerRoutes);
 //End========>>>>>
 
 
-
+                   
 app.get("/", (req, res) => {
   res.send("API is running successfully!");
 });
-
-
 sequelize
   .sync()
   .then(() => console.log("Database connected successfully"))
